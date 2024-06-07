@@ -27,7 +27,7 @@ export const summarizeFile = async(filename: string) => {
     return data
 }
 
-export const grabServiceIfAvailable = async() => {
-    let { data } = await axios.get(`${baseUrl}/api/grabservice`)
-    return data
-}
+// export const grabServiceIfAvailable = async() => {
+//     let { data } = await axios.get(`${baseUrl}/api/grabservice`)
+//     return data
+// }

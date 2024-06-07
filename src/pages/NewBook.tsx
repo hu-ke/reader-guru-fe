@@ -74,26 +74,26 @@ function NewBook() {
   const dispatch = useDispatch()
 
   const handleFileChange = async(e: any) => {
-    let result = await grabServiceIfAvailable()
-    if (result.code === 200) {
-      let formData = new FormData();
-      // @ts-ignore
-      let fl = e?.target?.files[0]
-      setFile(fl)
-      formData.append('file_upload', fl)
+    // let result = await grabServiceIfAvailable()
+    // if (result.code === 200) {
+    let formData = new FormData();
+    // @ts-ignore
+    let fl = e?.target?.files[0]
+    setFile(fl)
+    formData.append('file_upload', fl)
 
-      setIsUploading(true)
-      let res = await uploadFile(formData)
+    setIsUploading(true)
+    let res = await uploadFile(formData)
+    setIsUploading(false)
+    setIsUploading(true)
+    if (res.code === 200) {
       setIsUploading(false)
-      setIsUploading(true)
-      if (res.code === 200) {
-        setIsUploading(false)
-        setUploadingRes(res.data)
-        setPhase(PHASES.SUMMARIZE_CHAT)
-      }
-    } else {
-      alert(result.msg)
+      setUploadingRes(res.data)
+      setPhase(PHASES.SUMMARIZE_CHAT)
     }
+    // } else {
+    //   alert(result.msg)
+    // }
   }
 
   const handleUpload = async() => {
