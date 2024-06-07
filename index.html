@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/site-logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reader Guru</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Initialize the agent at application startup.
+      // If you're using an ad blocker or Brave/Firefox, this import will not work.
+      // Please use the NPM package instead: https://t.ly/ORyXk
+      const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+        .then(FingerprintJS => FingerprintJS.load())
+      // Get the visitor identifier when you need it.
+      fpPromise
+        .then(fp => fp.get())
+        .then(result => {
+          let userInfo = {
+            visitorId: result.visitorId
+          }
+          window.userInfo = userInfo
+        })
+    </script>
+  </body>
+</html>
