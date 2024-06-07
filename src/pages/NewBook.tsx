@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo } from 'react'
 import Button from "@/components/Button";
-import { uploadFile, summarizeFile, grabServiceIfAvailable } from '@/utils/http'
+import { uploadFile, summarizeFile } from '@/utils/http'
 import styled, { useTheme } from 'styled-components'
 import { Book, BookInfo } from './BookDetail';
 import Markdown from 'react-markdown'
