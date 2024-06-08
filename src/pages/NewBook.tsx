@@ -66,7 +66,7 @@ function NewBook() {
   const theme = useTheme()
   const [isUploading, setIsUploading] = useState(false)
   const [isSummarizing, setIsSummarizing] = useState(false)
-  const [uploadingRes, setUploadingRes] = useState<UPLOAD_RES_TYPES>()
+  const [fileInfo, setFileInfo] = useState<UPLOAD_RES_TYPES>()
   const [summarizingRes, setSummarizingRes] = useState<SUMMARIZE_RES_TYPES>()
   const fileInputRef = useRef(null);
   const [file, setFile] = useState<File>()
@@ -104,9 +104,8 @@ function NewBook() {
     setIsUploading(true)
     if (res.code === 200) {
       setIsUploading(false) 
-      let info = await generateFileInfo(res.data.fileName)
-      console.log('info', info)
-      setUploadingRes(res.data)
+      let infoRes = await generateFileInfo(res.data.fileName)
+      setFileInfo(infoRes.data)
       setPhase(PHASES.SUMMARIZE_CHAT)    
     }
   }
@@ -134,8 +133,8 @@ function NewBook() {
       await bookService.addOrUpdateBook({
         summary,
         name: fileName,
-        numsOfTokens: uploadingRes?.numsOfTokens,
-        coverImgUrl: uploadingRes?.coverImgUrl,
+        numsOfTokens: fileInfo?.numsOfTokens,
+        coverImgUrl: fileInfo?.coverImgUrl,
         updatedAt: new Date().valueOf().toString(),
         createdAt: new Date().valueOf().toString(),
       })
@@ -144,8 +143,8 @@ function NewBook() {
   }
 
   const isStep2Disabled = useMemo(() => {
-    return isSummarizing || !uploadingRes
-  }, [isSummarizing, uploadingRes])
+    return isSummarizing || !fileInfo
+  }, [isSummarizing, fileInfo])
 
   return (
     <div style={{marginTop: '20px'}}>
@@ -170,17 +169,17 @@ function NewBook() {
         {uploadingProgress}
         <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>
         {
-          uploadingRes ? (
+          fileInfo ? (
             <>
               <p style={{color: theme.green, fontStyle: 'italic'}}>
                 Your book has been uploaded successfully.
                 {/* <Button text onClick={summarize}> summarize</Button> the book. */}
               </p>
               <Book>
-                <img src={uploadingRes.coverImgUrl} alt="cover image" width={60}/>
+                <img src={fileInfo.coverImgUrl} alt="cover image" width={60}/>
                 <BookInfo>
-                  <div style={{fontWeight: 700, fontSize: '22px'}}>《{uploadingRes.fileName}》</div>
-                  <div> This book contains <span style={{color: theme.blue}}>{uploadingRes.numsOfTokens}</span> tokens.</div>
+                  <div style={{fontWeight: 700, fontSize: '22px'}}>《{fileInfo.fileName}》</div>
+                  <div> This book contains <span style={{color: theme.blue}}>{fileInfo.numsOfTokens}</span> tokens.</div>
                 </BookInfo>
               </Book>
             </>
@@ -193,8 +192,8 @@ function NewBook() {
   **Reader Guru** uses **gpt-3.5-turbo-16k** model to summarize documents. This model costs $0.0030 per 1k tokens as listed on [Open AI model pricing](https://openai.com/api/pricing/).
         `}</Markdown>
         {
-          uploadingRes ? (
-            <div>Summarization will cost around <span style={{color: theme.blue}}>${(uploadingRes.numsOfTokens * 0.003 / 1000).toFixed(2)}</span>.</div>
+          fileInfo ? (
+            <div>Summarization will cost around <span style={{color: theme.blue}}>${(fileInfo.numsOfTokens * 0.003 / 1000).toFixed(2)}</span>.</div>
           ) : ''
         }
         <Button onClick={handleSummarize} loading={isSummarizing} disabled={isStep2Disabled} size="small">
