@@ -22,7 +22,10 @@ export const summarizeFile = async(filename: string) => {
     let { data } = await axios.post(`${baseUrl}/api/summarize`, {
         filename,
     }, {
-        timeout: 300000
+        timeout: 300000,
+        headers: {
+            deviceId: `ReaderGuru-${window.userInfo.visitorId}`
+        }
     })
     return data
 }
