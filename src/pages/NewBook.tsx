@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo, } from 'react'
 import Button from "@/components/Button";
-import { uploadFile, summarizeFile } from '@/utils/http'
+import { uploadFile, summarizeFile, generateFileInfo } from '@/utils/http'
 import styled, { useTheme } from 'styled-components'
 import { Book, BookInfo } from './BookDetail';
 import Markdown from 'react-markdown'
@@ -103,9 +103,11 @@ function NewBook() {
     setIsUploading(false)
     setIsUploading(true)
     if (res.code === 200) {
-      setIsUploading(false)
+      setIsUploading(false) 
+      let info = await generateFileInfo(res.data.fileName)
+      console.log('info', info)
       setUploadingRes(res.data)
-      setPhase(PHASES.SUMMARIZE_CHAT)
+      setPhase(PHASES.SUMMARIZE_CHAT)    
     }
   }
 

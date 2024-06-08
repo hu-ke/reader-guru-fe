@@ -9,7 +9,7 @@ export const testGet = async() => {
 }
 
 export const uploadFile = async(params: any, onUploadProgress: any) => {
-    let { data } = await axios.post(`${baseUrl}/api/uploadfile`, params, {
+    let { data } = await axios.post(`${baseUrl}/api/uploadFile`, params, {
         headers: {
           'Content-Type': 'multipart/form-data',
           deviceId: `ReaderGuru-${window.userInfo.visitorId}`
@@ -21,6 +21,18 @@ export const uploadFile = async(params: any, onUploadProgress: any) => {
 
 export const summarizeFile = async(filename: string) => {
     let { data } = await axios.post(`${baseUrl}/api/summarize`, {
+        filename,
+    }, {
+        timeout: 300000,
+        headers: {
+            deviceId: `ReaderGuru-${window.userInfo.visitorId}`
+        }
+    })
+    return data
+}
+
+export const generateFileInfo = async(filename: string) => {
+    let { data } = await axios.post(`${baseUrl}/api/generateFileInfo`, {
         filename,
     }, {
         timeout: 300000,
