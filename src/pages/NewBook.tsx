@@ -7,6 +7,7 @@ import Markdown from 'react-markdown'
 import { bookService } from '@/utils/services/book';
 import { useDispatch } from 'react-redux';
 import { setMyBooks } from '@/store/bookSlice'
+import LoadingDots from '@/components/LoadingDots';
 
 enum PHASES {
   UPLOAD = 1,
@@ -65,6 +66,7 @@ position: relative;
 function NewBook() {
   const theme = useTheme()
   const [isUploading, setIsUploading] = useState(false)
+  const [uploadingMessage, setUploadingMessage] = useState('')
   const [isSummarizing, setIsSummarizing] = useState(false)
   const [fileInfo, setFileInfo] = useState<UPLOAD_RES_TYPES>()
   const [summarizingRes, setSummarizingRes] = useState<SUMMARIZE_RES_TYPES>()
@@ -100,9 +102,8 @@ function NewBook() {
       const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       setUploadingProgress(progress)
     })
-    setIsUploading(false)
-    setIsUploading(true)
     if (res.code === 200) {
+      setUploadingMessage(res.msg)
       setIsUploading(false) 
       let infoRes = await generateFileInfo(res.data.fileName)
       setFileInfo(infoRes.data)
@@ -166,23 +167,33 @@ function NewBook() {
             <div>book size: {fileSizeStr}</div>
           ) : ''
         }
-        {uploadingProgress}
-        <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>
+        {
+          uploadingProgress > 0 ? (
+            <>
+              <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>
+              {`${uploadingProgress}`}%
+            </>
+          ) : ''
+        }
+        {
+          uploadingMessage ? (
+            <p style={{color: theme.green, fontStyle: 'italic'}}>
+              {uploadingMessage} <LoadingDots color='orange' />
+            </p>
+          ) : ''
+        }
         {
           fileInfo ? (
-            <>
+            <Book>
               <p style={{color: theme.green, fontStyle: 'italic'}}>
-                Your book has been uploaded successfully.
-                {/* <Button text onClick={summarize}> summarize</Button> the book. */}
+                The workspace is ready. you can summarize or chat with the chatbot now.
               </p>
-              <Book>
-                <img src={fileInfo.coverImgUrl} alt="cover image" width={60}/>
-                <BookInfo>
-                  <div style={{fontWeight: 700, fontSize: '22px'}}>《{fileInfo.fileName}》</div>
-                  <div> This book contains <span style={{color: theme.blue}}>{fileInfo.numsOfTokens}</span> tokens.</div>
-                </BookInfo>
-              </Book>
-            </>
+              <img src={fileInfo.coverImgUrl} alt="cover image" width={60}/>
+              <BookInfo>
+                <div style={{fontWeight: 700, fontSize: '22px'}}>《{fileInfo.fileName}》</div>
+                <div> This book contains <span style={{color: theme.blue}}>{fileInfo.numsOfTokens}</span> tokens.</div>
+              </BookInfo>
+            </Book>
           ) : ''
         }
       </Step>
