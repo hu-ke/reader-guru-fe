@@ -50,7 +50,7 @@ interface QueryBook {
 
 export const queryBook = async(params: QueryBook)  => {
     const { filename, query } = params
-    let { data } = await axios.post(`${baseUrl}/api/generateFileInfo`, {
+    let { data } = await axios.post(`${baseUrl}/api/queryBook`, {
         filename,
         query
     }, {
