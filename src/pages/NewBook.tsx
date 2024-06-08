@@ -8,6 +8,7 @@ import { bookService } from '@/utils/services/book';
 import { useDispatch } from 'react-redux';
 import { setMyBooks } from '@/store/bookSlice'
 import LoadingDots from '@/components/LoadingDots';
+import ChatPanel from '@/components/ChatPanel';
 
 enum PHASES {
   UPLOAD = 1,
@@ -223,6 +224,11 @@ ${summarizingRes.summary}
 \`\`\`
             `}</Markdown>
             </Summary>
+          ) : ''
+        }
+        {
+          fileInfo ? (
+            <ChatPanel bookName={fileInfo.fileName} />
           ) : ''
         }
         {/* <ul>

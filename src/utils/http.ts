@@ -43,7 +43,20 @@ export const generateFileInfo = async(filename: string) => {
     return data
 }
 
-// export const grabServiceIfAvailable = async() => {
-//     let { data } = await axios.get(`${baseUrl}/api/grabservice`)
-//     return data
-// }
+interface QueryBook {
+    filename: string;
+    query: string;
+}
+
+export const queryBook = async(params: QueryBook)  => {
+    const { filename, query } = params
+    let { data } = await axios.post(`${baseUrl}/api/generateFileInfo`, {
+        filename,
+        query
+    }, {
+        headers: {
+            deviceId: `ReaderGuru-${window.userInfo.visitorId}`
+        }
+    })
+    return data
+}

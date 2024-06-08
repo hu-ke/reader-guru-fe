@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import BotImg from '../assets/bot-image.webp';
+import { useState } from 'react'
+import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
 
 const Panel = styled.div`
@@ -69,20 +71,38 @@ const GenerateBtn = styled.div`
   }
 `
 
-function ChatPanel() {
+interface Props {
+  bookName?: string;
+}
+
+const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
+  const [text, setText] = useState<string>('')
+
+  const onChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setText(e.currentTarget.value)
+  }
+
+  const onAsk = async() => {
+    let res = await queryBook({
+      query: text,
+      filename: bookName
+    })
+    console.log('res', res)
+  }
+
   return (
     <>
       <Panel>
         <Heading> 
           <img src={BotImg} alt="" width="40" height="40" />
-          <HeadingText>Hi, what would you like to learn about this book?</HeadingText>
+          <HeadingText>Hi, what would you like to know about this book?</HeadingText>
         </Heading>
       </Panel>
       <InputBar>
-        <input type="text" placeholder='Message chatbot' />
-
+        <input value={text} onChange={onChange} type="text" placeholder='Message chatbot' />
         <GenerateBtn>
           <svg
+            onClick={onAsk}
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
