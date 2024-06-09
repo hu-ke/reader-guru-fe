@@ -37,11 +37,17 @@ const BtnText = styled.span<{ $size?: string; }>`
 `
 
 const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, disabled=false, loading }) => {
+
+  const onBtnClick = () => {
+    if (!disabled && typeof onClick === 'function') {
+      onClick()
+    }
+  }
   
   return text ? (
-    <BtnText $size={size} onClick={onClick}>{ children }</BtnText>
+    <BtnText $size={size} onClick={onBtnClick}>{ children }</BtnText>
   ) : (
-    <Btn $size={size} $disabled={disabled} onClick={onClick}>
+    <Btn $size={size} $disabled={disabled} onClick={onBtnClick}>
       { children }
       {
         loading ? (
