@@ -50,22 +50,26 @@ function BookDetail() {
   const resummarize = async() => {
     setIsSummarizing(true)
     if (book?.name) {
-      let res = await summarizeFile(book.name)
-      setIsSummarizing(false)
-      
-      const { summary, fileName } = res.data
-      await bookService.addOrUpdateBook({
-        summary,
-        name: fileName,
-        numsOfTokens: book?.numsOfTokens,
-        coverImgUrl: book?.coverImgUrl,
-        updatedAt: new Date().valueOf().toString(),
-        createdAt: new Date().valueOf().toString(),
-      })
-      setBook({
-        ...book,
-        summary
-      })
+      try {
+        let res = await summarizeFile(book.name)
+        setIsSummarizing(false)
+        
+        const { summary, fileName } = res.data
+        await bookService.addOrUpdateBook({
+          summary,
+          name: fileName,
+          numsOfTokens: book?.numsOfTokens,
+          coverImgUrl: book?.coverImgUrl,
+          updatedAt: new Date().valueOf().toString(),
+          createdAt: new Date().valueOf().toString(),
+        })
+        setBook({
+          ...book,
+          summary
+        })
+      } catch(e) {
+        console.error(e)
+      }
     }
   }
 
