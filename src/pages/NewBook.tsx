@@ -8,7 +8,7 @@ import { bookService } from '@/utils/services/book';
 import { useDispatch } from 'react-redux';
 import { setMyBooks } from '@/store/bookSlice'
 import LoadingDots from '@/components/LoadingDots';
-import ChatPanel from '@/components/ChatPanel';
+import ChatPanel, {QA} from '@/components/ChatPanel';
 
 enum PHASES {
   UPLOAD = 1,
@@ -144,6 +144,19 @@ function NewBook() {
     }
   }
 
+  const onConversationUpdate = async(conversation: QA[]) => {
+    if (fileInfo?.fileName) {
+      await bookService.addOrUpdateBook({
+        name: fileInfo?.fileName,
+        numsOfTokens: fileInfo?.numsOfTokens,
+        coverImgUrl: fileInfo?.coverImgUrl,
+        updatedAt: new Date().valueOf().toString(),
+        createdAt: new Date().valueOf().toString(),
+        conversation
+      })
+    }
+  }
+
   const isStep2Disabled = useMemo(() => {
     return isSummarizing || !fileInfo
   }, [isSummarizing, fileInfo])
@@ -228,7 +241,7 @@ ${summarizingRes.summary}
         }
         {
           fileInfo ? (
-            <ChatPanel bookName={fileInfo.fileName} />
+            <ChatPanel bookName={fileInfo.fileName} onConversationUpdate={onConversationUpdate} />
           ) : ''
         }
         {/* <ul>

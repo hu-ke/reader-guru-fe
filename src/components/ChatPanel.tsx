@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import BotImg from '../assets/bot-image.webp';
 import UserImg from '../assets/usericon.webp';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
 
@@ -12,6 +12,7 @@ const Panel = styled.div`
   min-height: 250px;
   margin-top: 6px;
   position: relative;
+  overflow: scroll;
 `
 const Heading = styled.div`
   background-color: #f9fafb;
@@ -91,19 +92,25 @@ const AiMessage = styled.div`
 
 interface Props {
   bookName?: string;
+  onConversationUpdate?: Function;
 }
-interface QA {
+export interface QA {
   type: 'Q' | 'A';
   text: string;
 }
 
-const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
+const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate }) => {
   const [text, setText] = useState<string>('')
   const [conversation, setConversation] = useState<QA[]>([])
+  const [loading, setLoading] = useState(false)
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
   }
+
+  useEffect(() => {
+    onConversationUpdate && onConversationUpdate(conversation)
+  }, [conversation])
 
   const onAsk = async() => {
     conversation.push({
@@ -111,16 +118,25 @@ const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
       text: text
     })
     setConversation([...conversation])
-    let res = await queryBook({
-      query: text,
-      filename: bookName
-    })
-    if (res.code === 200) {
-      conversation.push({
-        type: 'A',
-        text: res.data.answer
+    setText('')
+    setLoading(true)
+    try {
+      let res = await queryBook({
+        query: text,
+        filename: bookName
       })
-      setConversation([...conversation])
+      setLoading(false)
+      if (res.code === 200) {
+        conversation.push({
+          type: 'A',
+          text: res.data.answer
+        })
+        setConversation([...conversation])
+      }
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -152,14 +168,19 @@ const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
       <InputBar>
         <input value={text} onChange={onChange} type="text" placeholder='Message chatbot' />
         <GenerateBtn>
-          <svg
-            onClick={onAsk}
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-          </svg>
-          {/* <LoadingDots color="#000" size="large" /> */}
+          {
+            loading ? (
+              <LoadingDots color="#000" size="large" />
+            ) : (
+              <svg
+                onClick={onAsk}
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
+              </svg>
+            )
+          }
         </GenerateBtn>
       </InputBar>
     </div>

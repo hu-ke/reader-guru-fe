@@ -9,6 +9,7 @@ export interface Book {
     coverImgUrl?: string;
     updatedAt: string;
     createdAt: string;
+    conversation?: Array<any>;
 }
 
 export class LocalDB extends Dexie {
@@ -16,8 +17,8 @@ export class LocalDB extends Dexie {
 
     constructor() {
         super('reader-guru')
-        this.version(4).stores({
-            book: '++id, summary, name, numsOfTokens, coverImgUrl, updateAt, createdAt'
+        this.version(1).stores({
+            book: '++id, summary, name, numsOfTokens, coverImgUrl, updateAt, createdAt, conversation'
         })
     }
 }
