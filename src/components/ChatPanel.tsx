@@ -89,20 +89,27 @@ const AiMessage = styled.div`
   color: #000;
   animation: ${fadein} 0.5s;
 `
-
-interface Props {
-  bookName?: string;
-  onConversationUpdate?: Function;
-}
 export interface QA {
   type: 'Q' | 'A';
   text: string;
 }
 
-const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate }) => {
+interface Props {
+  bookName?: string;
+  onConversationUpdate?: Function;
+  conversation?: Array<QA>;
+}
+
+const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, conversation: con }) => {
   const [text, setText] = useState<string>('')
   const [conversation, setConversation] = useState<QA[]>([])
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (Array.isArray(con)) {
+      setConversation([...con])
+    }
+  }, [con])
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)

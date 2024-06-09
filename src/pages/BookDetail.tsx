@@ -58,13 +58,13 @@ function SampleA() {
         <span style={{fontStyle: 'italic'}}>Summary:</span>
       <Markdown>{`
 \`\`\`
-${book?.summary}
+${book?.summary || ''}
 \`\`\`
       `}</Markdown>
       </Summary>
       <div style={{marginTop: '10px'}}>
         <span style={{fontStyle: 'italic'}}>Chat with you book:</span>
-        <ChatPanel />
+        <ChatPanel conversation={book?.conversation}/>
       </div>
     </div>
   );
