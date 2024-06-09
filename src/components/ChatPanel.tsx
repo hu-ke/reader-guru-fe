@@ -91,7 +91,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
   }
 
   return (
-    <>
+    <div style={{position: 'relative', paddingBottom: '60px'}}>
       <Panel>
         <Heading> 
           <img src={BotImg} alt="" width="40" height="40" />
@@ -111,7 +111,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
           {/* <LoadingDots color="#000" size="large" /> */}
         </GenerateBtn>
       </InputBar>
-    </>
+    </div>
   );
 }
 

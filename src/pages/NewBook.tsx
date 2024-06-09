@@ -171,7 +171,7 @@ function NewBook() {
         {
           (uploadingProgress > 0 && !fileInfo) ? (
             <>
-              <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>
+              <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>&nbsp;
               {`${uploadingProgress}`}%
             </>
           ) : ''
