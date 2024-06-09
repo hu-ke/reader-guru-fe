@@ -1,5 +1,6 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import BotImg from '../assets/bot-image.webp';
+import UserImg from '../assets/usericon.webp';
 import { useState } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
@@ -71,23 +72,56 @@ const GenerateBtn = styled.div`
   }
 `
 
+const fadein = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+const AiMessage = styled.div`
+  background: #f9fafb;
+  padding: 1.5rem;
+  padding-left: 70px;
+  color: #000;
+  animation: ${fadein} 0.5s;
+`
+
 interface Props {
   bookName?: string;
+}
+interface QA {
+  type: 'Q' | 'A';
+  text: string;
 }
 
 const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
   const [text, setText] = useState<string>('')
+  const [conversation, setConversation] = useState<QA[]>([])
 
   const onChange = (e: React.FormEvent<HTMLInputElement>) => {
     setText(e.currentTarget.value)
   }
 
   const onAsk = async() => {
+    conversation.push({
+      type: 'Q',
+      text: text
+    })
+    setConversation([...conversation])
     let res = await queryBook({
       query: text,
       filename: bookName
     })
-    console.log('res', res)
+    if (res.code === 200) {
+      conversation.push({
+        type: 'A',
+        text: res.data.answer
+      })
+      setConversation([...conversation])
+    }
   }
 
   return (
@@ -97,6 +131,23 @@ const ChatPanel: React.FC<Props> = ({ bookName='' }) => {
           <img src={BotImg} alt="" width="40" height="40" />
           <HeadingText>Hi, what would you like to know about this book?</HeadingText>
         </Heading>
+        {
+          conversation.length > 0 ? conversation.map(item => {
+            if (item.type === 'Q') {
+              return (
+                <div style={{padding: '20px', display: 'flex', alignItems: 'center'}}>
+                  <img src={UserImg} alt="User" style={{marginRight: '20px'}} />
+                  <span>{item.text}</span> 
+                </div>
+              )
+            }
+            return (
+              <AiMessage>
+                {item.text}
+              </AiMessage>
+            )
+          }) : ''
+        }
       </Panel>
       <InputBar>
         <input value={text} onChange={onChange} type="text" placeholder='Message chatbot' />
