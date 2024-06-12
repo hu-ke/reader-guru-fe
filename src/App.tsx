@@ -73,7 +73,8 @@ function App() {
     green: '#10a37f',
     deepGreen: '#1a7f64',
     disabledBg: '#f5f7fa',
-    disabledColor: '#c4c7cc'
+    disabledColor: '#c4c7cc',
+    red: '#f52743'
   };
   
 

@@ -4,18 +4,26 @@ import LoadingDots from './LoadingDots/index'
 
 interface Props {
   children: ReactNode;
-  size?: 'small' | 'medium'
-  text?: boolean,
-  onClick?: () => void,
-  disabled?: boolean,
-  loading?: boolean
+  size?: 'small' | 'medium';
+  text?: boolean;
+  onClick?: () => void;
+  disabled?: boolean;
+  loading?: boolean;
+  danger?: boolean;
 }
 
-const Btn = styled.button<{ $size?: string; $disabled?: boolean; }>`
+const Btn = styled.button<{ $size?: string; $disabled?: boolean; $danger?: boolean; }>`
   padding: .625em 1em;
   border: none;
   font-size: ${props => props.$size === 'small' ? '12px' : '16px'};
-  background-color: ${props => props.$disabled ? props.theme.disabledBg : props.theme.blue};
+  background-color: ${props => {
+    if (props.$disabled) {
+      return props.theme.disabledBg
+    } else if (props.$danger) {
+      return props.theme.red
+    }
+    return props.theme.blue
+  }};
   border-radius: 3px;
   color: ${props => props.$disabled ? props.theme.disabledColor : '#fff'};
   border-color: ${props => props.$disabled ? '#e4e8ee' : 'none'};
@@ -27,7 +35,7 @@ const Btn = styled.button<{ $size?: string; $disabled?: boolean; }>`
   }
 `
 
-const BtnText = styled.span<{ $size?: string; }>`
+const BtnText = styled.span<{ $size?: string; $disabled?: boolean; $danger?: boolean; }>`
   font-size: ${props => props.$size === 'small' ? '12px' : '16px'};
   color: ${props => props.theme.blue};
   cursor: pointer;
@@ -36,7 +44,7 @@ const BtnText = styled.span<{ $size?: string; }>`
   }
 `
 
-const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, disabled=false, loading }) => {
+const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, disabled=false, loading, danger=false }) => {
 
   const onBtnClick = () => {
     if (!disabled && typeof onClick === 'function') {
@@ -45,9 +53,9 @@ const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, dis
   }
   
   return text ? (
-    <BtnText $size={size} onClick={onBtnClick}>{ children }</BtnText>
+    <BtnText $size={size} $danger={danger} onClick={onBtnClick}>{ children }</BtnText>
   ) : (
-    <Btn $size={size} $disabled={disabled} onClick={onBtnClick}>
+    <Btn $size={size} $danger={danger} $disabled={disabled} onClick={onBtnClick}>
       { children }
       {
         loading ? (

@@ -99,16 +99,20 @@ function NewBook() {
     formData.append('file_upload', fl)
 
     setIsUploading(true)
-    let res = await uploadFile(formData, (progressEvent: any) => {
-      const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-      setUploadingProgress(progress)
-    })
-    if (res.code === 200) {
-      setUploadingMessage(res.msg)
-      setIsUploading(false) 
-      let infoRes = await generateFileInfo(res.data.fileName)
-      setFileInfo(infoRes.data)
-      setPhase(PHASES.SUMMARIZE_CHAT)    
+    try {
+      let res = await uploadFile(formData, (progressEvent: any) => {
+        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        setUploadingProgress(progress)
+      })
+      if (res.code === 200) {
+        setUploadingMessage(res.msg)
+        setIsUploading(false) 
+        let infoRes = await generateFileInfo(res.data.fileName)
+        setFileInfo(infoRes.data)
+        setPhase(PHASES.SUMMARIZE_CHAT)    
+      }
+    } catch(e) {
+      console.error('error occurred:', e)
     }
   }
 
