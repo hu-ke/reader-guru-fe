@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components'
 import LoadingDots from './LoadingDots/index'
 
+type ButtonType = 'primary'|'secondary'|'normal'
 interface Props {
   children: ReactNode;
   size?: 'small' | 'medium';
@@ -10,28 +11,71 @@ interface Props {
   disabled?: boolean;
   loading?: boolean;
   danger?: boolean;
+  type?: ButtonType;
 }
 
-const Btn = styled.button<{ $size?: string; $disabled?: boolean; $danger?: boolean; }>`
+const Btn = styled.button<{ $size?: string; $disabled?: boolean; $danger?: boolean; $type?: ButtonType }>`
   padding: .625em 1em;
-  border: none;
+  border: ${props => {
+    if (props.$type === 'secondary') {
+      return '1px solid'
+    } else if (props.$type === 'normal') {
+      return '1px solid'
+    } else {
+      return '1px solid'
+    }
+  }};
   font-size: ${props => props.$size === 'small' ? '12px' : '16px'};
   background-color: ${props => {
     if (props.$disabled) {
       return props.theme.disabledBg
+    } else if (props.$type === 'normal') {
+      return '#fff'
     } else if (props.$danger) {
       return props.theme.red
+    } else if (props.$type === 'secondary') {
+      return '#fff'
     }
     return props.theme.blue
   }};
   border-radius: 3px;
-  color: ${props => props.$disabled ? props.theme.disabledColor : '#fff'};
-  border-color: ${props => props.$disabled ? '#e4e8ee' : 'none'};
+  color: ${props => {
+    if (props.$disabled) {
+      return props.theme.disabledColor;
+    } else if (props.$type === 'normal') {
+      return props.theme.normal
+    } else if (props.$type === 'secondary') {
+      return props.theme.blue
+    }
+    return '#fff'
+  }};
+  border-color: ${props => {
+    if (props.$disabled) {
+      return '#e4e8ee'
+    } else if (props.$type === 'normal') {
+      return props.theme.normal
+    } else if (props.$type === 'secondary') {
+      return props.theme.blue
+    }
+  }};
   cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
   display: flex;
   align-items: center;
   &:hover {
-    background-color: ${props => props.$disabled ? props.theme.disabledBg : props.theme.deepBlue};
+    background-color: ${props => {
+      if (props.$disabled) {
+        return props.theme.disabledBg
+      } else if (props.$danger) {
+        return props.theme.red;
+      } else if (props.$type === 'primary') {
+        return props.theme.deepBlue
+      }
+    }};
+    opacity: ${props => {
+      if (props.$danger) {
+        return 0.5
+      }
+    }}
   }
 `
 
@@ -44,7 +88,7 @@ const BtnText = styled.span<{ $size?: string; $disabled?: boolean; $danger?: boo
   }
 `
 
-const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, disabled=false, loading, danger=false }) => {
+const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, disabled=false, loading, danger=false, type='primary' }) => {
 
   const onBtnClick = () => {
     if (!disabled && typeof onClick === 'function') {
@@ -55,7 +99,7 @@ const Button: React.FC<Props> = ({ children, size = 'medium', text, onClick, dis
   return text ? (
     <BtnText $size={size} $danger={danger} onClick={onBtnClick}>{ children }</BtnText>
   ) : (
-    <Btn $size={size} $danger={danger} $disabled={disabled} onClick={onBtnClick}>
+    <Btn $size={size} $danger={danger} $disabled={disabled} $type={type} onClick={onBtnClick}>
       { children }
       {
         loading ? (

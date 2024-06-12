@@ -1,17 +1,16 @@
 import styled, { useTheme } from 'styled-components'
 import ChatPanel from '../components/ChatPanel'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown'
 import { useCallback, useEffect, useState } from 'react';
 import { bookService } from '@/utils/services/book';
 import { Book as BookType } from '@/utils/db';
 import Button from '@/components/Button';
 import { summarizeFile } from '@/utils/http';
-// import Dialog from '@mui/material/Dialog';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@/components/Dialog'
+import { setMyBooks } from '@/store/bookSlice'
+import { useDispatch } from 'react-redux';
+
 
 export const Book = styled.div`
   padding-top: 10px;
@@ -42,7 +41,8 @@ function BookDetail() {
   const { bookname='' } = useParams()
   const [book, setBook] = useState<BookType>()
   const [isSummarizing, setIsSummarizing] = useState(false)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const fetchDbBook = useCallback(async() => {
     if (bookname) {
@@ -81,16 +81,36 @@ function BookDetail() {
     }
   }
 
-  const handleDialogOpen = () => {
-    setIsDialogOpen(true)
+  const fetchDbBooks = async() => {
+    let dbBooks = await bookService.listBooks()
+    if (dbBooks?.length > 0) {
+      dispatch(setMyBooks(dbBooks))
+      const lastBookName = dbBooks[dbBooks.length - 1].name
+      navigate(`/mybooks/${lastBookName}`)
+    } else {
+      navigate('/new-book')
+    }
   }
 
-  const onDeleteConfirm = () => {
-    setIsDialogOpen(false)
-  }
-
-  const onDeleteCancel = () => {
-    setIsDialogOpen(false)
+  const handleModalOpen = () => {
+    const onCancel = () => {
+      dialog.hide()
+    }
+    const onOk = async() => {
+      await bookService.deleteBook(bookname)
+      fetchDbBooks()
+      dialog.hide()
+    }
+    const dialog = Dialog.confirm({
+      title: <span style={{color: theme.red}}>Are you sure to delete this book?</span>,
+      content: <p style={{margin: 20}}>Once you delete the file, you will need to re-upload it if needed.</p>,
+      footer: (
+        <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Button size="small" danger onClick={onOk}>Confirm</Button>&nbsp;
+          <Button size="small" type="normal" onClick={onCancel}>Cancel</Button>
+        </footer>
+      )
+    })
   }
 
   return (
@@ -101,7 +121,7 @@ function BookDetail() {
           <div style={{fontWeight: 700, fontSize: '22px'}}>《{book?.name}》</div>
           <div> This book contains <span style={{color: theme.blue}}>{book?.numsOfTokens}</span> tokens.</div>
         </BookInfo>
-        <Button danger size="small" onClick={handleDialogOpen}>Delete</Button>
+        <Button danger size="small" onClick={handleModalOpen}>Delete</Button>
       </Book>
       <Summary>
         <span style={{fontStyle: 'italic', display: 'flex', marginBottom: '10px'}}>
@@ -125,4 +145,4 @@ ${book?.summary || ''}
   );
 }
 
-export default BookDetail
+export default BookDetail;

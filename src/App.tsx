@@ -6,6 +6,18 @@ import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { testGet } from './utils/http';
 import Logo from '@/assets/logo.png'
 
+export const theme = {
+  normal: '#000',
+  blue: "rgb(72, 152, 218)", // blue
+  deepBlue: '#096398',
+  lightBlue: '#2bd5ff',
+  green: '#10a37f',
+  deepGreen: '#1a7f64',
+  disabledBg: '#f5f7fa',
+  disabledColor: '#c4c7cc',
+  red: '#f52743'
+};
+
 const Main = styled.div`
   flex: 1;
   height: 100%;
@@ -13,7 +25,6 @@ const Main = styled.div`
   display: flex;
   background-color: #fff;
   border-radius: 8px;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
 `
 
 const TopBar = styled.div`
@@ -29,7 +40,6 @@ const TopBar = styled.div`
   background-color: #ffffff;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.25);
   backface-visibility: hidden;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
   padding-right: 60px;
 `
 
@@ -63,20 +73,8 @@ function App() {
   }, [])
 
   const toUpload = () => {
-    console.log('toUpload')
     navigate('/new-book')
   }
-
-  const theme = {
-    blue: "rgb(72, 152, 218)", // blue
-    deepBlue: '#096398',
-    green: '#10a37f',
-    deepGreen: '#1a7f64',
-    disabledBg: '#f5f7fa',
-    disabledColor: '#c4c7cc',
-    red: '#f52743'
-  };
-  
 
   return (
     <ThemeProvider theme={theme}>

@@ -16,7 +16,8 @@ class BookService {
     }
 
     public async deleteBook(name: string): Promise<void> {
-        await this.db.book.delete(name)
+        console.log(name)
+        await this.db.book.where('name').equals(name).delete()
     }
 
     public async updateBook(book: Book): Promise<number> {
