@@ -7,7 +7,7 @@ import { bookService } from '@/utils/services/book';
 import { Book as BookType } from '@/utils/db';
 import Button from '@/components/Button';
 import { summarizeFile } from '@/utils/http';
-import Dialog from '@mui/material/Dialog';
+// import Dialog from '@mui/material/Dialog';
 // import DialogActions from '@mui/material/DialogActions';
 // import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
@@ -121,28 +121,6 @@ ${book?.summary || ''}
         <span style={{fontStyle: 'italic'}}>Chat with you book:</span>
         <ChatPanel conversation={book?.conversation}/>
       </div>
-      <Dialog
-        open={isDialogOpen}
-        onClose={handleDialogOpen}
-        // aria-labelledby="alert-dialog-title"
-        // aria-describedby="alert-dialog-description"
-      >
-        {/* <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onDeleteCancel}>Cancel</Button>
-          <Button onClick={onDeleteConfirm}>
-            Confirm
-          </Button>
-        </DialogActions> */}
-      </Dialog>
     </div>
   );
 }
