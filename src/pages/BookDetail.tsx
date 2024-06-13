@@ -77,7 +77,7 @@ function BookDetail() {
           summary
         })
       } catch(e) {
-        console.error(e)
+        console.error('resummarize error', e)
       }
     }
   }
