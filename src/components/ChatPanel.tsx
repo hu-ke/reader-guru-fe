@@ -123,6 +123,14 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
   }, [conversation])
 
   const onAsk = async() => {
+    if (!bookName) {
+      console.error('book name cannot be empty')
+      return
+    }
+    if (!text) {
+      console.error('question cannot be empty')
+      return
+    }
     conversation.push({
       type: 'Q',
       text: text

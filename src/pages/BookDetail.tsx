@@ -1,5 +1,5 @@
 import styled, { useTheme } from 'styled-components'
-import ChatPanel from '../components/ChatPanel'
+import ChatPanel, {QA} from '../components/ChatPanel'
 import { useParams, useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown'
 import { useCallback, useEffect, useState } from 'react';
@@ -128,6 +128,18 @@ function BookDetail() {
     })
   }
 
+  const onConversationUpdate = async(conversation: QA[]) => {
+    let dbBook = await bookService.getBook(bookname)
+    await bookService.addOrUpdateBook({
+      name: bookname,
+      numsOfTokens: dbBook?.numsOfTokens,
+      coverImgUrl: dbBook?.coverImgUrl,
+      updatedAt: new Date().valueOf().toString(),
+      createdAt: dbBook?.createdAt || '',
+      conversation
+    })
+  }
+
   return (
     <div style={{position: 'relative', paddingBottom: '60px'}}>
       <Book>
@@ -154,7 +166,7 @@ ${book?.summary || ''}
       </Summary>
       <div style={{marginTop: '10px'}}>
         <span style={{fontStyle: 'italic'}}>{t('Chat with your book:')}</span>
-        <ChatPanel conversation={book?.conversation}/>
+        <ChatPanel bookName={bookname} conversation={book?.conversation} onConversationUpdate={onConversationUpdate} />
       </div>
     </div>
   );
