@@ -108,13 +108,14 @@ function NewBook() {
       })
       if (res.code === 200) {
         setUploadingMessage(res.msg)
-        setIsUploading(false) 
         let infoRes = await generateFileInfo(res.data.fileName)
         setFileInfo(infoRes.data)
         setPhase(PHASES.SUMMARIZE_CHAT)    
       }
     } catch(e) {
       console.error('error occurred:', e)
+    } finally {
+      setIsUploading(false)
     }
   }
 
@@ -188,7 +189,7 @@ function NewBook() {
           ) : ''
         }
         {
-          (uploadingProgress > 0 && !fileInfo) ? (
+          (uploadingProgress > 0 && isUploading) ? (
             <>
               <progress value={uploadingProgress} max="100">{uploadingProgress}%</progress>&nbsp;
               {`${uploadingProgress}`}%
