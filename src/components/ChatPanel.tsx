@@ -5,6 +5,8 @@ import { KeyboardEvent, useEffect, useState } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
 import { t } from 'i18next';
+import Dialog from './Dialog';
+import Button from './Button';
 
 const Panel = styled.div`
   border: 1px solid #d9d9e3;
@@ -140,9 +142,22 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
           text: res.data.answer
         })
         setConversation([...conversation])
+      } else if (res.code === 500) {
+        const onOk = async() => {
+          dialog.hide()
+        }
+        const dialog = Dialog.confirm({
+          title: t('Operation Failed'),
+          content: <p style={{margin: 20}}>{t('The file has been removed on server, you need to upload again.')}</p>,
+          footer: (
+            <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
+              <Button size="small" onClick={onOk}>{t('Confirm')}</Button>&nbsp;
+            </footer>
+          )
+        })
       }
     } catch (e) {
-      console.error(e)
+      console.error('chat panel error:', e)
     } finally {
       setLoading(false)
     }
