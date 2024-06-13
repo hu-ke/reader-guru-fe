@@ -198,7 +198,7 @@ function NewBook() {
         {
           (uploadingMessage && !fileInfo) ? (
             <p style={{color: theme.green, fontStyle: 'italic'}}>
-              {uploadingMessage} <LoadingDots color='orange' size='large' />
+              {t(uploadingMessage)} <LoadingDots color='orange' size='large' />
             </p>
           ) : ''
         }

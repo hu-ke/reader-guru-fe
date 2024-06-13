@@ -43,13 +43,14 @@ const NewBook = {
     'Click to upload': '点击此处上传',
     'book size': '文件大小',
     'Summarize or talk with book': '总结或基于书本内容提问',
-    'The workspace is ready. Now you can summarize or chat with the book.': '工作空间已经就绪，现在可以总结或提问啦',
+    'The workspace is ready. Now you can summarize or chat with the book.': '工作空间已经就绪，现在可以总结或提问啦。',
     'This book contains': '本书包含',
     '**Reader Guru** uses **gpt-3.5-turbo-16k** model to summarize documents.': '网站使用**gpt-3.5-turbo-16k**模型来生成总结。',
     'This model costs $0.0030 per 1k tokens as listed on': '该模型的价格是每1k token花费0.003美元，可以在OpenAI官网查询',
     'Summarization will cost around': '本次总结过程需要花费大约',
     'summarize': '生成总结',
-    'summary:': '总结'
+    'summary:': '总结',
+    'Your book has been uploaded successfully! And now we are creating workspace for your, just a moment.': '书本已成功上传，正在为您创建工作空间，请耐心等待。'
 }
 
 const BookDetail = {
