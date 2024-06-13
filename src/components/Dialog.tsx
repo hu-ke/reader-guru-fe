@@ -22,7 +22,6 @@ interface Config {
 
 Dialog.confirm = (config: Config) => {
   const { title='', content='', footer='', onOk=() => {}, onCancel=() => {} } = config
-  console.log('confirm')
   const container = document.createElement('div');
   document.body.appendChild(container);
   let myRef: HTMLDialogElement;
@@ -39,8 +38,15 @@ Dialog.confirm = (config: Config) => {
     onOk()
   }
 
+  const closeHandler = function(event: any) {
+    if (event.target === myRef) {
+        myRef.close();
+    }
+  }
+
   const unmount = () => {
     root.unmount()
+    myRef.removeEventListener('click', closeHandler)
     container.parentNode?.removeChild(container)
   }
   const root = ReactDOM.createRoot(container)
@@ -51,6 +57,8 @@ Dialog.confirm = (config: Config) => {
           ref={(ref: any) => {
             myRef = ref;
             ref?.showModal()
+            // Close dialog when clicking on the backdrop
+            ref.addEventListener('click', closeHandler);
           }}
         >
           <h2 style={{ margin:0, padding: 0}}>{ title }</h2>

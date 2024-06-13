@@ -62,20 +62,33 @@ function BookDetail() {
       try {
         let res = await summarizeFile(book.name)
         setIsSummarizing(false)
-        
-        const { summary, fileName } = res.data
-        await bookService.addOrUpdateBook({
-          summary,
-          name: fileName,
-          numsOfTokens: book?.numsOfTokens,
-          coverImgUrl: book?.coverImgUrl,
-          updatedAt: new Date().valueOf().toString(),
-          createdAt: new Date().valueOf().toString(),
-        })
-        setBook({
-          ...book,
-          summary
-        })
+        if (res.data) {
+          const { summary, fileName } = res.data
+          await bookService.addOrUpdateBook({
+            summary,
+            name: fileName,
+            numsOfTokens: book?.numsOfTokens,
+            coverImgUrl: book?.coverImgUrl,
+            updatedAt: new Date().valueOf().toString(),
+            createdAt: new Date().valueOf().toString(),
+          })
+          setBook({
+            ...book,
+            summary
+          })
+        } else if (res.code === 500) {
+          const onOk = async() => {
+            dialog.hide()
+          }
+          const dialog = Dialog.confirm({
+            content: <p style={{margin: 20}}>{t('The file has been removed on server, you need to upload again.')}</p>,
+            footer: (
+              <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
+                <Button size="small" onClick={onOk}>{t('Confirm')}</Button>&nbsp;
+              </footer>
+            )
+          })
+        }
       } catch(e) {
         console.error('resummarize error', e)
       }

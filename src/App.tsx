@@ -96,7 +96,10 @@ function App() {
   }
 
   const contactMe = () => {
-    Dialog.confirm({
+    const onOk = () => {
+      dialog.hide()
+    }
+    const dialog = Dialog.confirm({
       title:t('Contact me'),
       content: (
         <StyledGrid>
@@ -117,6 +120,11 @@ function App() {
           </div>
           <div className="left-align">86-13616512778</div>
         </StyledGrid>
+      ),
+      footer: (
+        <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Button size="small" onClick={onOk}>{t('Confirm')}</Button>&nbsp;
+        </footer>
       )
     })
   }
