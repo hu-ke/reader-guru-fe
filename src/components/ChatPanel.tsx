@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import BotImg from '../assets/bot-image.webp';
 import UserImg from '../assets/usericon.webp';
-import { useEffect, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
 import { t } from 'i18next';
@@ -148,7 +148,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     }
   }
 
-  const onKeyUp = (event: KeyboardEvent) => {
+  const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       onAsk()
     }
