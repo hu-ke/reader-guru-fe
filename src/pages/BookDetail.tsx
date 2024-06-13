@@ -81,6 +81,7 @@ function BookDetail() {
             dialog.hide()
           }
           const dialog = Dialog.confirm({
+            title: t('Operation Failed'),
             content: <p style={{margin: 20}}>{t('The file has been removed on server, you need to upload again.')}</p>,
             footer: (
               <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>

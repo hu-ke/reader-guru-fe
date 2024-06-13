@@ -28,7 +28,7 @@ const TopBar = {
     'Mobile phone': '手机号',
     'contact me': '联系我',
     'Any suggestions?': '有什么建议吗?',
-    'Your AI Reading Assistant': '你的AI阅读小帮手'
+    'Your AI Reading Assistant': '您的AI阅读小帮手'
 }
 
 const Menu = {
@@ -62,7 +62,9 @@ const BookDetail = {
     'Summary': '总结',
     're-summarize': '重新总结',
     'Chat with your book:': '基于本书问答',
-    'Message chatbot': '对机器人提问'
+    'Message chatbot': '对机器人提问',
+    'The file has been removed on server, you need to upload again.': '文件已被移除，你需要再次上传',
+    'Operation Failed': '操作失败',
 }
 
 const ChatPanel = {

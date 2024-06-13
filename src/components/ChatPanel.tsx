@@ -148,6 +148,12 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     }
   }
 
+  const onKeyUp = (event: KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      onAsk()
+    }
+  }
+
   return (
     <div style={{position: 'relative', paddingBottom: '60px'}}>
       <Panel>
@@ -174,7 +180,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
         }
       </Panel>
       <InputBar>
-        <input value={text} onChange={onChange} type="text" placeholder={t('Message chatbot')} />
+        <input value={text} onChange={onChange} onKeyUp={onKeyUp} type="text" placeholder={t('Message chatbot')} />
         <GenerateBtn>
           {
             loading ? (
