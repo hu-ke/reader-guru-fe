@@ -4,6 +4,7 @@ import UserImg from '../assets/usericon.webp';
 import { useEffect, useState } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
+import { t } from 'i18next';
 
 const Panel = styled.div`
   border: 1px solid #d9d9e3;
@@ -152,7 +153,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
       <Panel>
         <Heading> 
           <img src={BotImg} alt="" width="40" height="40" />
-          <HeadingText>Hi, what would you like to know about this book?</HeadingText>
+          <HeadingText>{t('Hi, what would you like to know about this book?')}</HeadingText>
         </Heading>
         {
           conversation.length > 0 ? conversation.map(item => {
@@ -173,7 +174,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
         }
       </Panel>
       <InputBar>
-        <input value={text} onChange={onChange} type="text" placeholder='Message chatbot' />
+        <input value={text} onChange={onChange} type="text" placeholder={t('Message chatbot')} />
         <GenerateBtn>
           {
             loading ? (

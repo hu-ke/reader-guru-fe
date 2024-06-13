@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import App from './App.jsx'
 import BookDetail from './pages/BookDetail'
 import Introduction from './pages/Introduction'
@@ -14,10 +14,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      // {
-      //   path: "/charlie-and-the-chocolate-factory-by-roald-dahl",
-      //   element: <BookDetail />,
-      // },
+      {
+        path: '/',
+        element: <Navigate to='/new-book' replace />
+      },
       {
         path: "introduction",
         element: <Introduction />
@@ -34,11 +34,15 @@ const router = createBrowserRouter([
   }
 ])
 
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>,
-)
+const root = document.getElementById('root')
+if (root) {
+  ReactDOM.createRoot(root).render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </React.StrictMode>,
+  )
+} else {
+  console.error('these is no container element with id "root".')
+}

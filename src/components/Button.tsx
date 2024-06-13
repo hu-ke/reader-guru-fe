@@ -84,7 +84,9 @@ const BtnText = styled.span<{ $size?: string; $disabled?: boolean; $danger?: boo
   color: ${props => props.theme.blue};
   cursor: pointer;
   &:hover {
-    color: #1a7f64;
+    color: ${props => {
+      return props.theme.deepBlue
+    }};
   }
 `
 

@@ -2,8 +2,10 @@ import styled from 'styled-components';
 import { NavLink } from "react-router-dom";
 import { useEffect } from 'react';
 import { bookService } from '@/utils/services/book';
+import { Book } from '@/utils/db';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMyBooks } from '@/store/bookSlice'
+import { t } from 'i18next';
 // NavLinkRenderProps
 const Wrapper = styled.div`
   position: relative;
@@ -125,14 +127,14 @@ function Menu() {
   return (
     <Wrapper id="sideBar">
       <DragBar id="dragBar" />
-      <SubHead>Get Started</SubHead>
-      <StyledNavLink to="/introduction">Introduction</StyledNavLink>
-      <StyledNavLink to="/new-book">Upload a Book</StyledNavLink>
+      <SubHead>{t('Get Started')}</SubHead>
+      <StyledNavLink to="/introduction">{t('Introduction')}</StyledNavLink>
+      <StyledNavLink to="/new-book">{t('Upload a Book')}</StyledNavLink>
       {/* <StyledNavLink to="/charlie-and-the-chocolate-factory-by-roald-dahl">Sample Book: charlie-and-the-chocolate-factory-by-roald-dahl</StyledNavLink> */}
-      <SubHead>My Books</SubHead>
+      <SubHead>{t('My Books')}</SubHead>
       {
         myBooks.length > 0 ? (
-          myBooks.map(book => {
+          myBooks.map((book: Book) => {
             return <StyledNavLink key={book.name} to={`/mybooks/${book.name}`}>{book.name}</StyledNavLink>
           })
         ) : ''
