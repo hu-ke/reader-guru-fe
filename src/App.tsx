@@ -144,7 +144,6 @@ function App() {
       changeLanguage('en')
       localStorage.setItem('language', 'en')
     }
-    window.location.reload()
   }
 
   return (

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setMyBooks } from '@/store/bookSlice'
 import LoadingDots from '@/components/LoadingDots';
 import ChatPanel, {QA} from '@/components/ChatPanel';
-import { t } from 'i18next';
+import { useTranslation } from "react-i18next";
 
 enum PHASES {
   UPLOAD = 1,
@@ -77,6 +77,7 @@ function NewBook() {
   const [phase, setPhase] = useState(PHASES.UPLOAD)
   const [uploadingProgress, setUploadingProgress] = useState(0);
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   const fileSizeStr = useMemo(() => {
     if (file) {

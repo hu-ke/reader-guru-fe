@@ -10,8 +10,7 @@ import { summarizeFile } from '@/utils/http';
 import Dialog from '@/components/Dialog'
 import { setMyBooks } from '@/store/bookSlice'
 import { useDispatch } from 'react-redux';
-import { t } from 'i18next';
-
+import { useTranslation } from "react-i18next";
 
 export const Book = styled.div`
   padding-top: 10px;
@@ -38,6 +37,7 @@ const Summary = styled.div`
 `
 
 function BookDetail() {
+  const { t } = useTranslation()
   const theme = useTheme()
   const { bookname='' } = useParams()
   const [book, setBook] = useState<BookType>()
