@@ -39,7 +39,7 @@ const Menu = {
 }
 
 const NewBook = {
-    'Upload a book': '上传一本书',
+    'Upload a book': '上传文件',
     'Click to upload': '点击此处上传',
     'book size': '文件大小',
     'Summarize or talk with book': '总结或基于书本内容提问',
