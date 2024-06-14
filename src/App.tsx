@@ -166,7 +166,7 @@ function App() {
           <div style={{marginLeft: '20px', marginRight: 'auto', fontFamily: 'Helloyasmin', letterSpacing: '4px', fontSize: '20px'}}>{t('Your AI Reading Assistant')}</div>
         </div>
         <>
-          {t('Any suggestions?')} &nbsp;<Button size="medium" text onClick={contactMe}>{t('contact me')}</Button>
+          {t('Need help?')} &nbsp;<Button size="medium" text onClick={contactMe}>{t('contact me')}</Button>
           <Sep />
           <Button onClick={toUpload}>
             {t('Upload a book')}&nbsp;

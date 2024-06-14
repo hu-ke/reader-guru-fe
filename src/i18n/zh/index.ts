@@ -27,7 +27,7 @@ const TopBar = {
     'Email': '邮箱',
     'Mobile phone': '手机号',
     'contact me': '联系我',
-    'Any suggestions?': '有什么建议吗?',
+    'Need help?': '有什么建议吗?',
     'Your AI Reading Assistant': '您的AI阅读小帮手'
 }
 
