@@ -156,7 +156,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
         }
         const dialog = Dialog.confirm({
           title: t('Operation Failed'),
-          content: <p style={{margin: 20}}>{t('The file has been removed on server, you need to upload again.')}</p>,
+          content: <p style={{margin: 20}}>{t(res.msg)}</p>,
           footer: (
             <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
               <Button size="small" onClick={onOk}>{t('Confirm')}</Button>&nbsp;

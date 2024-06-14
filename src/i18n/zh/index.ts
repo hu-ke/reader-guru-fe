@@ -69,7 +69,8 @@ const BookDetail = {
 }
 
 const ChatPanel = {
-    'Hi, what would you like to know about this book?': '哈喽，关于本书你有什么需要了解的？'
+    'Hi, what would you like to know about this book?': '哈喽，关于本书你有什么需要了解的？',
+    'reached token limit.': 'OpenAI token限制'
 }
 
 export default {
