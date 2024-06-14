@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ariakit/react": "^0.4.7",
     "@reduxjs/toolkit": "^2.2.5",
     "axios": "^1.7.2",
     "dexie": "^4.0.7",

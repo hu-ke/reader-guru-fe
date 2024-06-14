@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@ariakit/react':
-    specifier: ^0.4.7
-    version: 0.4.7(react-dom@18.3.1)(react@18.3.1)
   '@reduxjs/toolkit':
     specifier: ^2.2.5
     version: 2.2.5(react-redux@9.1.2)(react@18.3.1)
@@ -86,34 +83,6 @@ packages:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
     dev: true
-
-  /@ariakit/core@0.4.7:
-    resolution: {integrity: sha512-GUy/3ZY4kW1KdYHtMZRrRlj5FYbZTAyHlimxHI7Zs0xsC+kAzIf8lopnf67Y9IYLgEMr37KosIV7kwpkJpNs5Q==}
-    dev: false
-
-  /@ariakit/react-core@0.4.7(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-OogUyQ20cxkRNRuqLI05JbmpR4Lr5HwhUIqnb/sipzt6bkg/3wCXEnUAjfxg3nPjLTMjJ8+ODWmPC9JMJTW/yg==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-    dependencies:
-      '@ariakit/core': 0.4.7
-      '@floating-ui/dom': 1.6.5
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      use-sync-external-store: 1.2.2(react@18.3.1)
-    dev: false
-
-  /@ariakit/react@0.4.7(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-uUruuCo1M0Nj2oq1nTwDfUlVTLuoI9xeHP75EkuXX46lg5hzE5vVWbSMO1D6MCy7UwrUx2Ts4IqxdKr97suTwQ==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
-    dependencies:
-      '@ariakit/react-core': 0.4.7(react-dom@18.3.1)(react@18.3.1)
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-    dev: false
 
   /@babel/code-frame@7.24.6:
     resolution: {integrity: sha512-ZJhac6FkEd1yhG2AHOmfcXG4ceoLltoCVJjN5XsWN9BifBQr+cHJbWi0h68HZuSORq+3WtJ2z0hwF2NG1b5kcA==}
@@ -593,23 +562,6 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
-
-  /@floating-ui/core@1.6.2:
-    resolution: {integrity: sha512-+2XpQV9LLZeanU4ZevzRnGFg2neDeKHgFLjP6YLW+tly0IvrhqT4u8enLGjLH3qeh85g19xY5rsAusfwTdn5lg==}
-    dependencies:
-      '@floating-ui/utils': 0.2.2
-    dev: false
-
-  /@floating-ui/dom@1.6.5:
-    resolution: {integrity: sha512-Nsdud2X65Dz+1RHjAIP0t8z5e2ff/IRbei6BqFrl1urT8sDVzM1HMQ+R0XcU5ceRfyO3I6ayeqIfh+6Wb8LGTw==}
-    dependencies:
-      '@floating-ui/core': 1.6.2
-      '@floating-ui/utils': 0.2.2
-    dev: false
-
-  /@floating-ui/utils@0.2.2:
-    resolution: {integrity: sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==}
-    dev: false
 
   /@humanwhocodes/config-array@0.11.14:
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
