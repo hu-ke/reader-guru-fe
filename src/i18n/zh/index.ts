@@ -19,7 +19,7 @@ const introduction = {
     'Vectors are created by Pinecone or embedding.': '通过embedding或Pinecone来生成vectors。',
     'Server will return answers or summary depending on user actions.': '服务器会根据用户操作来生成答案或总结。',
     'Practice': '实践',
-    'Click to Upload a book': '点击此处上传书本'
+    'Click to Upload a book': '点击此处上传文件'
 }
 const TopBar = {
     'Contact me': '联系我',
@@ -34,7 +34,7 @@ const TopBar = {
 const Menu = {
     'Get Started': '开始',
     'Introduction': '介绍',
-    'Upload a Book': '上传书本',
+    'Upload a Book': '上传文件',
     'My Books': '我的书籍'
 }
 
@@ -42,7 +42,7 @@ const NewBook = {
     'Upload a book': '上传文件',
     'Click to upload': '点击此处上传',
     'book size': '文件大小',
-    'Summarize or talk with book': '总结或基于书本内容提问',
+    'Summarize or talk with book': '总结或基于文件内容提问',
     'The workspace is ready. Now you can summarize or chat with the book.': '工作空间已经就绪，现在可以总结或提问啦。',
     'This book contains': '本书包含',
     '**Reader Guru** uses **gpt-3.5-turbo-16k** model to summarize documents.': '网站使用**gpt-3.5-turbo-16k**模型来生成总结。',
@@ -50,7 +50,7 @@ const NewBook = {
     'Summarization will cost around': '本次总结过程需要花费大约',
     'summarize': '生成总结',
     'summary:': '总结',
-    'Your book has been uploaded successfully! And now we are creating workspace for your, just a moment.': '书本已成功上传，正在为您创建工作空间，请耐心等待。'
+    'Your book has been uploaded successfully! And now we are creating workspace for your, just a moment.': '文件已成功上传，正在为您创建工作空间，请耐心等待。'
 }
 
 const BookDetail = {
