@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 import BotImg from '../assets/bot-image.webp';
 import UserImg from '../assets/usericon.webp';
-import { KeyboardEvent, useEffect, useState } from 'react'
+import { KeyboardEvent, useEffect, useState, useRef } from 'react'
 import { queryBook } from '@/utils/http';
 import LoadingDots from './LoadingDots';
 import { t } from 'i18next';
@@ -103,11 +103,12 @@ interface Props {
   conversation?: Array<QA>;
 }
 
+
 const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, conversation: con }) => {
   const [text, setText] = useState<string>('')
   const [conversation, setConversation] = useState<QA[]>([])
   const [loading, setLoading] = useState(false)
-  const [isComposing, setIsComposing] = useState(false)
+  const messageListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (Array.isArray(con)) {
@@ -151,6 +152,8 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
           text: res.data.answer
         })
         setConversation([...conversation])
+        //scroll to bottom
+        messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
       } else if (res.code === 500) {
         const onOk = async() => {
           dialog.hide()
@@ -172,26 +175,15 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     }
   }
 
-  const onCompositionStart = () => {
-    setIsComposing(true)
-  }
-  const onCompositionEnd = () => {
-    setIsComposing(false)
-  }
-
-  const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && isComposing) {
-      event.preventDefault()
-      console.log('Enter key pressed during composition - ignored');
-    }
-    if (event.key === 'Enter') {
+  const onKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && !loading) {
       onAsk()
     }
   }
 
   return (
     <div style={{position: 'relative', paddingBottom: '60px'}}>
-      <Panel>
+      <Panel ref={messageListRef}>
         <Heading> 
           <img src={BotImg} alt="" width="40" height="40" />
           <HeadingText>{t('Hi, what would you like to know about this book?')}</HeadingText>
@@ -215,7 +207,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
         }
       </Panel>
       <InputBar>
-        <input value={text} onCompositionStart={onCompositionStart} onCompositionEnd={onCompositionEnd} onChange={onChange} onKeyUp={onKeyUp} type="text" placeholder={t('Message chatbot')} />
+        <input value={text} onChange={onChange} onKeyPress={onKeyPress} type="text" placeholder={t('Message chatbot')} />
         <GenerateBtn>
           {
             loading ? (

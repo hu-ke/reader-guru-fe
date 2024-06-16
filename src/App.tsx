@@ -163,7 +163,7 @@ function App() {
       <TopBar>
         <div style={{cursor: 'pointer', display: 'flex', alignItems: 'center', marginRight: 'auto'}}>
           <img src={Logo} alt="logo" style={{width: '50px', marginLeft: '100px'}} />
-          <div style={{marginLeft: '20px', marginRight: 'auto', fontFamily: 'Helloyasmin', letterSpacing: '4px', fontSize: '20px'}}>{t('Your AI Reading Assistant')}</div>
+          <div style={{marginLeft: '20px', marginRight: 'auto', fontFamily: 'Helloyasmin', letterSpacing: '4px', fontSize: '20px'}}>{t('Your OpenAI Reading Assistant')}</div>
         </div>
         <>
           {t('Need help?')} &nbsp;<Button size="medium" text onClick={contactMe}>{t('contact me')}</Button>
