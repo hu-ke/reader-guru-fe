@@ -152,8 +152,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
           text: res.data.answer
         })
         setConversation([...conversation])
-        //scroll to bottom
-        messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
+        // scroll to bottom
       } else if (res.code === 500) {
         const onOk = async() => {
           dialog.hide()
@@ -171,6 +170,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     } catch (e) {
       console.error('chat panel error:', e)
     } finally {
+      messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
       setLoading(false)
     }
   }
