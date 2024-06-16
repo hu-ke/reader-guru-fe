@@ -170,6 +170,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     } catch (e) {
       console.error('chat panel error:', e)
     } finally {
+      console.log('messageListRef.current.scrollHeight', messageListRef.current?.scrollHeight)
       messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight);
       setLoading(false)
     }
