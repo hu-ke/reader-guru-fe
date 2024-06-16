@@ -107,6 +107,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
   const [text, setText] = useState<string>('')
   const [conversation, setConversation] = useState<QA[]>([])
   const [loading, setLoading] = useState(false)
+  const [isComposing, setIsComposing] = useState(false)
 
   useEffect(() => {
     if (Array.isArray(con)) {
@@ -171,7 +172,18 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
     }
   }
 
+  const onCompositionStart = () => {
+    setIsComposing(true)
+  }
+  const onCompositionEnd = () => {
+    setIsComposing(false)
+  }
+
   const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && isComposing) {
+      event.preventDefault()
+      console.log('Enter key pressed during composition - ignored');
+    }
     if (event.key === 'Enter') {
       onAsk()
     }
@@ -203,7 +215,7 @@ const ChatPanel: React.FC<Props> = ({ bookName='', onConversationUpdate, convers
         }
       </Panel>
       <InputBar>
-        <input value={text} onChange={onChange} onKeyUp={onKeyUp} type="text" placeholder={t('Message chatbot')} />
+        <input value={text} onCompositionStart={onCompositionStart} onCompositionEnd={onCompositionEnd} onChange={onChange} onKeyUp={onKeyUp} type="text" placeholder={t('Message chatbot')} />
         <GenerateBtn>
           {
             loading ? (
