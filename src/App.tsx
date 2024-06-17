@@ -123,7 +123,7 @@ function App() {
       ),
       footer: (
         <footer style={{display: 'flex', flexDirection: 'row-reverse'}}>
-          <Button size="small" onClick={onOk}>{t('Confirm')}</Button>&nbsp;
+          <Button size="small" onClick={onOk}>{t('OK')}</Button>&nbsp;
         </footer>
       )
     })
