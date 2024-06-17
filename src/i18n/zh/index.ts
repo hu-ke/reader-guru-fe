@@ -28,7 +28,7 @@ const TopBar = {
     'Mobile phone': '手机号',
     'contact me': '联系我',
     'Need help?': '需要帮助?',
-    'Your OpenAI Reading Assistant': '您的OpenAI阅读小帮手'
+    'Your OpenAI Reading Assistant': '您的OpenAI阅读助手'
 }
 
 const Menu = {
