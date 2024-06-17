@@ -10,7 +10,7 @@
 # 技术栈
 - 前端
     - Reactjs v18、dexie v4、Typescript v5
-- 服务端
+- [服务端](https://github.com/hu-ke/reader-guru-be/)
     - python v3.12、gunicorn、fastapi、langchain
 # 网站部分截图
 文件上传页

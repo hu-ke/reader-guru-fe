@@ -6,11 +6,11 @@
 </p>
 
 # Introduction
-This project is an **OpenAI-powered** website that integrated with OpenAI's capabilities of text **summarization** and **question answer generation** with given context. Both `.pdf` and `.epub` formats are supported. Summaries and conversations can be mangaged locally. This website is used for **Free**, without having to signup or signin. This repo is the source code of the front part. [visit website>>](http://reader.guru/introduction)
+This project is an **OpenAI-powered** website that integrated with OpenAI's capabilities of text **summarization** and **question answer generation** with given context. Both `.pdf` and `.epub` formats are supported. Summaries and conversations can be mangaged locally. This website is used for **Free**, without having to signup or signin. This repo is the source code of the front side. [visit website>>](http://reader.guru/introduction)
 # Tech Stack
 - Front side
     - Reactjs v18、dexie v4、Typescript v5
-- Server side
+- [Server side](https://github.com/hu-ke/reader-guru-be/)
     - python v3.12、gunicorn、fastapi、langchain
 # Screenshots of the website
 Book uploading page
