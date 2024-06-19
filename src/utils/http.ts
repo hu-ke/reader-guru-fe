@@ -13,7 +13,7 @@ export const testGet = async() => {
 }
 
 export const uploadFile = async(params: any, onUploadProgress: any) => {
-    let { data } = await axios.post(`${baseUrl}/api/uploadFile`, params, {
+    let { data } = await axios.post(`${baseUrl}/api/uploadFile/`, params, {
         headers: {
           'Content-Type': 'multipart/form-data',
           deviceId: `ReaderGuru-${window.userInfo.visitorId}`,
